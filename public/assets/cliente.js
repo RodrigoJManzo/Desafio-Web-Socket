@@ -60,4 +60,5 @@ const muestraMensajes = async (messages) =>{
     const compiled = Handlebars.compile(template)
     const html = compiled({messages})
     chatContainer.innerHTML = html
+    chatContainer.scrollTop = chatContainer.offsetHeight
 }

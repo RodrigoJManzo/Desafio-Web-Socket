@@ -1,0 +1,55 @@
+
+#headerTitutlo{
+    text-align: center;
+    margin: 2rem;
+}
+
+#formProductos{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+#productDisplay{
+    border-radius: 10px;
+    background-color: skyblue;
+    margin-top: 3rem;
+
+}
+
+#chatContainer{
+    border-radius: 10px;
+    background-color: salmon;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    height: auto;
+}
+
+#tituloProducto{
+    text-align: center;
+}
+
+.product{
+    display: flex;
+    flex-direction: row;
+}
+
+.product__img{
+    margin: 2rem;
+    width: 10rem;
+    border-radius: 10px;
+    box-shadow: 10px 5px 5px gray;
+}
+
+.product__title{
+    text-decoration:overline;
+    margin-top: 2rem;
+}
+.product__price{
+    margin-top: 2rem;
+}
+
+#chat__title{
+    text-align: center;
+}
+

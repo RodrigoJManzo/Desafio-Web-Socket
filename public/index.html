@@ -5,6 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- BOOTSTRAP -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
     <!-- acceso a socket io -->
     <script src="/socket.io/socket.io.js"></script>
 
@@ -17,21 +20,42 @@
     <title>DESAFIO WEBSOCKET</title>
 </head>
 <body>
-    <form id="formProductos" class="formProductos" >
-        <input type="text" name="titulo" placeholder="Titulo">
-        <input type="text" name="precio" placeholder="Precio">
-        <input type="text" name="imagen" placeholder="Imagen">
-        <button type="submit"  > AGREGAR </button>
-    </form>
-    
-    <div id="productDisplay">
+    <header>
+        <h1 id="headerTitutlo"><strong>DESAFIO WEBSOCKET</strong></h1>
+    </header>
+    <div class="container">
+        <div class="row gx-3 justify-content-center">
+            <div class="col-12">
+                <form id="formProductos" class="formProductos form-group" >
+                    <input type="text" class="form-control" name="titulo" placeholder="Titulo" required>
+                    <input type="text" class="form-control" name="precio" placeholder="Precio" required>
+                    <input type="text" class="form-control" name="imagen" placeholder="Imagen" required>
+                    <button class="btn btn-success" type="submit"  > AGREGAR </button>
+                </form>
+            </div>
+        </div>
+        <div class="row gx-3 justify-content-center" >
+            <div class="col-12" id="productDisplay">
 
+            </div>
+        </div>
+        <div class="row gx-3 justify-content-center">
+            <div class="col-12" id="chatContainer" >
+
+            </div>
+        </div>
+        <div class="row gx-3 justify-content-center">
+            <div class="col-12">
+                <form id="chat">
+                    <input type="text" name="mensaje" required>
+                    <button type="submit">Enviar</button>
+                </form>
+            </div>
+        </div>
+        
+        
     </div>
-    <form id="chat">
-        <input type="text" name="mensaje">
-        <button type="submit">Enviar</button>
-    </form>
-    <div id="chatContainer"></div>
+   
 
     <script src="./assets/cliente.js"></script>
 </body>
