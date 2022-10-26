@@ -2,6 +2,11 @@ const express = require("express")
 const {Server : HttpServer} = require ("http")
 const {Server : SocketIOServer} = require ('socket.io')
 
+// importo dayjs y agrego pluging CustomParseFormat
+const dayjs = require (`dayjs`)
+const customParseFormat = require(`dayjs/plugin/customParseFormat`)
+dayjs.extend(customParseFormat)
+
 const productos = require (`./models/producto/modelProducto`)
 const mensajes = require (`./models/Mensaje/modelMensaje`)
 
@@ -50,7 +55,10 @@ const sendMensajes = async (socket)=>{
 }
 
 //Obtengo y Guardo mensajes en el JSON de mensajes
-const messageSaver = async (newMensaje)=>{
+const messageSaver = async (mensaje)=>{
+    const date = new Date()
+    const fechaFormato = dayjs(date).format(`DD/MM/YYYY hh:mm:ss`)
+    const newMensaje = {...mensaje, date: `${fechaFormato} hs `}
     await mensajes.save(newMensaje)
-    const allMsg = await mensajes.getAll()
-    io.sockets.emit(`todosMensajes`, allMsg)}
+    const messages = await mensajes.getAll()
+    io.sockets.emit(`todosMensajes`, messages)}
