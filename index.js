@@ -15,24 +15,16 @@ httpServer.listen(PORT, ()=> console.log(`server corriendo en ${PORT}`))
 
 io.on(`connection`, socket =>{
     sendProductos(socket)
-
-    socket.on(`productoNuevo`, (newProducto) =>{
+    socket.on(`productoNuevo`, newProducto =>{
         productSaver(newProducto)
     })
 })
-
-
-
-
-
-
 
 
 const sendProductos = async (socket)=>{
     const allProducts = await productos.getAll()
     socket.emit(`todosProductos`, allProducts)
 }
-
 
 
 const productSaver = async (newProducto)=>{

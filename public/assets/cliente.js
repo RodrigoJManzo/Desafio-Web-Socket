@@ -2,6 +2,7 @@ const socket = io("http://localhost:8080")
 
 
 const formProductos = document.getElementById(`formProductos`)
+const displayProductos = document.getElementById(`productDisplay`)
 
 formProductos.addEventListener('submit', (e) =>{
     e.preventDefault()
@@ -13,7 +14,15 @@ formProductos.addEventListener('submit', (e) =>{
 } )
 
 
-socket.on(`todosProductos`, data =>{
-    console.log(data)
+socket.on(`todosProductos`, allProducts =>{
+    muestraProductos(allProducts)
 })
 
+
+const muestraProductos = async (products) =>{
+    const res = await fetch (`./../assets/templates/productsTemplate.handlebars`)
+    const template = await res.text()
+    const compiled = Handlebars.compile(template)
+    const html = compiled({products})
+    displayProductos.innerHTML = html
+}
