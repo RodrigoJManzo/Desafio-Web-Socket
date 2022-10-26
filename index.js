@@ -14,6 +14,7 @@ app.use(express.static(`./public`))
 
 httpServer.listen(PORT, ()=> console.log(`server corriendo en ${PORT}`))
 
+//AUTOMATICAMENTE AL INICIAR CONEXION ENVIO MESAJES Y PRODUCTOS EN LA MEMORIA
 io.on(`connection`, socket =>{
     sendProductos(socket)
     sendMensajes(socket)
@@ -27,13 +28,13 @@ io.on(`connection`, socket =>{
 
 
 //PRODUCTOS
-
+// Obtengo y Propago Productos usando modulo productos
 const sendProductos = async (socket)=>{
     const allProducts = await productos.getAll()
     socket.emit(`todosProductos`, allProducts)
 }
 
-
+//Obtengo y Guardo Productos en el JSON de productoso usando modulo Porductos
 const productSaver = async (newProducto)=>{
     await productos.save(newProducto)
     const allProducts = await productos.getAll()
@@ -42,13 +43,13 @@ const productSaver = async (newProducto)=>{
 
 
 //CHAT
-
+//Obtengo y Propago Mensajes desde modulo mensajes
 const sendMensajes = async (socket)=>{
     const allMsg = await mensajes.getAll()
     socket.emit(`todosMensajes`, allMsg)
 }
 
-
+//Obtengo y Guardo mensajes en el JSON de mensajes
 const messageSaver = async (newMensaje)=>{
     await mensajes.save(newMensaje)
     const allMsg = await mensajes.getAll()

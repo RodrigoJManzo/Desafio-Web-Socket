@@ -10,7 +10,8 @@ const chatForm = document.getElementById(`chat`)
 const chatContainer = document.getElementById(`chatContainer`)
 
 // PRODUCTOS
-
+//Escucho el fomulario de productos y tomo sus datos
+//Emito los datos a Producto Nuevo
 formProductos.addEventListener('submit', (e) =>{
     e.preventDefault()
     const data = new FormData(formProductos)
@@ -20,12 +21,12 @@ formProductos.addEventListener('submit', (e) =>{
     console.log(`Datos de Productos Recibidos`, values)
 } )
 
-
+//Esucho en Todos los Productos
 socket.on(`todosProductos`, allProducts =>{
     muestraProductos(allProducts)
 })
 
-
+//Renderizo los Productos con la informacion obtenida del JSON y el template
 const muestraProductos = async (products) =>{
     const res = await fetch (`./../assets/templates/productsTemplate.handlebars`)
     const template = await res.text()
@@ -36,7 +37,8 @@ const muestraProductos = async (products) =>{
 
 
 //CHAT
-
+//Escucho el fomulario de mensajes y tomo sus datos
+//Emito los datos a mensaje Nuevo
 chatForm.addEventListener('submit', (e) =>{
     e.preventDefault()
     const data = new FormData(chatForm)
@@ -46,10 +48,12 @@ chatForm.addEventListener('submit', (e) =>{
     console.log(`Datos de Productos Recibidos`, values)
 } )
 
+//Esucho en todos los mensajes
 socket.on(`todosMensajes`, allMsg =>{
     muestraMensajes(allMsg)
 })
 
+//Renderizo los mensajes con la informacion obtenida del JSON y el template
 const muestraMensajes = async (messages) =>{
     const res = await fetch (`./../assets/templates/chatTemplate.handlebars`)
     const template = await res.text()
