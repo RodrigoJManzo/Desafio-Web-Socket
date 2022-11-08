@@ -1,5 +1,6 @@
-const fSync = require('fs')
-const path = require('path')
+import  fSync from 'fs'
+import path from 'path'
+
 const fs = fSync.promises
 
 class Container{
@@ -101,4 +102,4 @@ class Container{
     }
 }
 
-module.exports = Container
+export default Container

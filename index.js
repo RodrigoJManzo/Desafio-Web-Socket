@@ -1,14 +1,15 @@
-const express = require("express")
-const {Server : HttpServer} = require ("http")
-const {Server : SocketIOServer} = require ('socket.io')
+import express from "express"
+import {Server as HttpServer} from "http"
+import {Server as SocketIOServer} from "socket.io"
+
 
 // importo dayjs y agrego pluging CustomParseFormat
-const dayjs = require (`dayjs`)
-const customParseFormat = require(`dayjs/plugin/customParseFormat`)
+import dayjs from "dayjs"
+import customParseFormat from "dayjs/plugin/customParseFormat.js"
 dayjs.extend(customParseFormat)
 
-const productos = require (`./models/producto/modelProducto`)
-const mensajes = require (`./models/Mensaje/modelMensaje`)
+import Products from "./models/producto/modelProducto.js"
+import Messages from "./models/Mensaje/modelMensaje.js"
 
 const app = express ()
 const httpServer = new HttpServer(app)
@@ -35,14 +36,14 @@ io.on(`connection`, socket =>{
 //PRODUCTOS
 // Obtengo y Propago Productos usando modulo productos
 const sendProductos = async (socket)=>{
-    const allProducts = await productos.getAll()
+    const allProducts = await Products.getAll()
     socket.emit(`todosProductos`, allProducts)
 }
 
 //Obtengo y Guardo Productos en el JSON de productoso usando modulo Porductos
 const productSaver = async (newProducto)=>{
-    await productos.save(newProducto)
-    const allProducts = await productos.getAll()
+    await Products.save(newProducto)
+    const allProducts = await Products.getAll()
     io.sockets.emit(`todosProductos`, allProducts)
 }
 
@@ -50,7 +51,7 @@ const productSaver = async (newProducto)=>{
 //CHAT
 //Obtengo y Propago Mensajes desde modulo mensajes
 const sendMensajes = async (socket)=>{
-    const allMsg = await mensajes.getAll()
+    const allMsg = await Messages.getAll()
     socket.emit(`todosMensajes`, allMsg)
 }
 
@@ -59,6 +60,6 @@ const messageSaver = async (mensaje)=>{
     const date = new Date()
     const fechaFormato = dayjs(date).format(`DD/MM/YYYY hh:mm:ss`)
     const newMensaje = {...mensaje, date: `${fechaFormato} hs `}
-    await mensajes.save(newMensaje)
-    const messages = await mensajes.getAll()
+    await Messages.save(newMensaje)
+    const messages = await Messages.getAll()
     io.sockets.emit(`todosMensajes`, messages)}
