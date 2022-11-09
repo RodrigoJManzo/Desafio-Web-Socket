@@ -1,8 +1,8 @@
 import express from "express"
 import {Server as HttpServer} from "http"
 import {Server as SocketIOServer} from "socket.io"
-import { dbServer } from "./models/dbConnection.js"
-
+import getAll from "./SQL/productosGet.js"
+import save from "./SQL/productosInsert.js"
 
 // importo dayjs y agrego pluging CustomParseFormat
 import dayjs from "dayjs"
@@ -43,7 +43,7 @@ const sendProductos = async (socket)=>{
     socket.emit(`todosProductos`, allProducts)
 }
 
-//Obtengo y Guardo Productos en el JSON de productoso usando modulo Porductos
+//Obtengo y Guardo Productos en el JSON de productos o usando modulo Porductos
 const productSaver = async (newProducto)=>{
     await Products.save(newProducto)
     const allProducts = await Products.getAll()

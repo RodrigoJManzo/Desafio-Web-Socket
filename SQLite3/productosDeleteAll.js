@@ -1,8 +1,8 @@
-import { dbServer } from "../models/dbConnection.js";
+import { serverLite } from "./sqliteConnection"
 const deleteAll = async () =>{
-dbServer.from('productos').del()
+serverLite.from('productos').del()
     .then(()=> console.log('todos los productos fueron borrados'))
     .catch (error => {console.log(error); throw error})
-    .finally(()=> dbServer.destroy())}
+    .finally(()=> serverLite.destroy())}
 
 export default deleteAll

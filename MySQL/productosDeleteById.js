@@ -1,10 +1,9 @@
-import { dbServer } from "../models/dbConnection.js";
+import { dbServer } from "./dbConnection.js";
 const delById = async (id)=>{
     try {
         await dbServer.from('productos').where('id',id).del()
-            .then((val) => console.log('Producto Borrado: ',val))
-            .catch(err => { console.log(err);  })
-            .finally(() => baseDeDatos.destroy())
+            return ((val) => console.log('Producto Borrado: ',val))
+            
     } catch (error) {
         console.log(error)
     }

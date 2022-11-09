@@ -1,7 +1,7 @@
-import { dbServer } from "../models/dbConnection.js";
+import { serverLite } from "./sqliteConnection"
 
 const createTable = async() =>{
-    await dbServer.schema.createTable('productos', table =>{
+    await serverLite.schema.createTable('productos', table =>{
         table.increments('id')
         table.string('titulo')
         table.float('precio')
@@ -9,7 +9,7 @@ const createTable = async() =>{
     })
     . then (a => console.log(`tabla creada ${a}`))
     .catch (error => console.log(error))
-    .finally(()=> dbServer.destroy())
+    .finally(()=> serverLite.destroy())
 }
 
 

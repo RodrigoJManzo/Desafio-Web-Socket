@@ -1,4 +1,4 @@
-import { dbServer } from "../models/dbConnection.js";
+import { dbServer } from "./dbConnection.js";
 
 const getAll = async () => { 
     await dbServer.from('productos').select('*')
