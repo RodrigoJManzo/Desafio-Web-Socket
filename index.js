@@ -1,6 +1,7 @@
 import express from "express"
 import {Server as HttpServer} from "http"
 import {Server as SocketIOServer} from "socket.io"
+import { dbServer } from "./models/dbConnection.js"
 
 
 // importo dayjs y agrego pluging CustomParseFormat
@@ -19,6 +20,8 @@ const PORT = 8080
 app.use(express.static(`./public`))
 
 httpServer.listen(PORT, ()=> console.log(`server corriendo en ${PORT}`))
+
+
 
 //AUTOMATICAMENTE AL INICIAR CONEXION ENVIO MESAJES Y PRODUCTOS EN LA MEMORIA
 io.on(`connection`, socket =>{
