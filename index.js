@@ -1,8 +1,7 @@
 import express from "express"
 import {Server as HttpServer} from "http"
 import {Server as SocketIOServer} from "socket.io"
-import getAll from "./SQL/productosGet.js"
-import save from "./SQL/productosInsert.js"
+import {MensajesSQL,ProductosSQL} from "./models/basesDatos.js"
 
 // importo dayjs y agrego pluging CustomParseFormat
 import dayjs from "dayjs"
@@ -39,14 +38,14 @@ io.on(`connection`, socket =>{
 //PRODUCTOS
 // Obtengo y Propago Productos usando modulo productos
 const sendProductos = async (socket)=>{
-    const allProducts = await Products.getAll()
+    const allProducts = await ProductosSQL.getAll()
     socket.emit(`todosProductos`, allProducts)
 }
 
 //Obtengo y Guardo Productos en el JSON de productos o usando modulo Porductos
 const productSaver = async (newProducto)=>{
-    await Products.save(newProducto)
-    const allProducts = await Products.getAll()
+    await ProductosSQL.save(newProducto)
+    const allProducts = await ProductosSQL.getAll()
     io.sockets.emit(`todosProductos`, allProducts)
 }
 
@@ -54,7 +53,7 @@ const productSaver = async (newProducto)=>{
 //CHAT
 //Obtengo y Propago Mensajes desde modulo mensajes
 const sendMensajes = async (socket)=>{
-    const allMsg = await Messages.getAll()
+    const allMsg = await MensajesSQL.getAll()
     socket.emit(`todosMensajes`, allMsg)
 }
 
@@ -63,6 +62,6 @@ const messageSaver = async (mensaje)=>{
     const date = new Date()
     const fechaFormato = dayjs(date).format(`DD/MM/YYYY hh:mm:ss`)
     const newMensaje = {...mensaje, date: `${fechaFormato} hs `}
-    await Messages.save(newMensaje)
-    const messages = await Messages.getAll()
+    await MensajesSQL.save(newMensaje)
+    const messages = await MensajesSQL.getAll()
     io.sockets.emit(`todosMensajes`, messages)}
