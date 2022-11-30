@@ -7,8 +7,8 @@ const ALL_DATABASES = {
 sql: () => {
     KnexService.init();
     return {
-      ProductosSQL: new ContainerMySQL(KnexService.KnexMySQL, "productos"),
-      MensajesSQL: new ContainerMySQL(KnexService. knexSqlite, "messages"),
+      ProductosSQL: new ContainerMySQL(KnexService.KnexMySQL, "products"),
+      MensajesSQL: new ContainerMySQL(KnexService. KnexSqlite, "messages"),
     };
   },
 };

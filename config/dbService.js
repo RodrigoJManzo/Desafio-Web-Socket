@@ -11,17 +11,17 @@ const addDatasets = async (knexConnector, data, tableName) => {
 
 const createProductTable = async (selectedKnex) => {
   try {
-    const tableExist = await selectedKnex.schema.hasTable("productos");
+    const tableExist = await selectedKnex.schema.hasTable("products");
     if (tableExist) return;
 
-    await selectedKnex.schema.createTable("productos", (table) => {
+    await selectedKnex.schema.createTable("products", (table) => {
       table.increments();
       table.string("titulo");
       table.float("precio");
       table.string("imagen");
     });
 
-    await addDatasets(selectedKnex, DATASETS.products, "productos");
+    await addDatasets(selectedKnex, DATASETS.products, "products");
   } catch (error) {
     
     console.error(error);
