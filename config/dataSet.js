@@ -21,22 +21,22 @@ const products = [
   
   const messages = [
     {
-      id: 1,
+      
       email: "11",
       text: "22 ",
-      timestamp: "15/7/2022 19:11:14",
+      
     },
     {
-      id: 2,
+      
       email: "33",
       text: "¿44",
-      timestamp: "15/7/2022 19:11:26",
+      
     },
     {
-      id: 3,
+      
       email: "55",
       text: "66",
-      timestamp: "15/7/2022 19:11:51",
+      
     },
   ];
   

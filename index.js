@@ -26,6 +26,7 @@ httpServer.listen(PORT, ()=> console.log(`server corriendo en ${PORT}`))
 io.on(`connection`, socket =>{
     sendProductos(socket)
     sendMensajes(socket)
+    console.log(`Cliente nuevo conectado`)
     socket.on(`productoNuevo`, newProducto =>{
         productSaver(newProducto)
     })
@@ -36,13 +37,13 @@ io.on(`connection`, socket =>{
 
 
 //PRODUCTOS
-// Obtengo y Propago Productos usando modulo productos
+// Obtengo y Propago Productos 
 const sendProductos = async (socket)=>{
     const allProducts = await ProductosSQL.getAll()
     socket.emit(`todosProductos`, allProducts)
 }
 
-//Obtengo y Guardo Productos en el JSON de productos o usando modulo Porductos
+//Obtengo y Guardo Productos 
 const productSaver = async (newProducto)=>{
     await ProductosSQL.save(newProducto)
     const allProducts = await ProductosSQL.getAll()
@@ -57,7 +58,7 @@ const sendMensajes = async (socket)=>{
     socket.emit(`todosMensajes`, allMsg)
 }
 
-//Obtengo y Guardo mensajes en el JSON de mensajes
+//Obtengo y Guardo mensajes 
 const messageSaver = async (mensaje)=>{
     const date = new Date()
     const fechaFormato = dayjs(date).format(`DD/MM/YYYY hh:mm:ss`)

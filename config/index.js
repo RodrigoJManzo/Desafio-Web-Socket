@@ -1,12 +1,12 @@
-const DATABASES = {
-  sql: { name: "sql" },
-  };
+// const DATABASES = {
+//   sql: { name: "sql" },
+//   };
 
-const selectedDB = DATABASES.sql.name
+// const selectedDB = DATABASES.sql.name
 
 const config = {
-  SELECTED_DATABASE: DATABASES[selectedDB],
-  DATABASES,
+  //SELECTED_DATABASE: DATABASES[selectedDB],
+  //DATABASES,
     knex: {
       mysql: {
         client: "mysql",
@@ -16,15 +16,15 @@ const config = {
           user:  "root",
           database: "products",
         },
-      },
-      sqlite: {
-        client: "sqlite3",
-        connection: {
-            filename: "../db",
-        },
-        useNullAsDefault: true
-      },
-    },
+      }//,
+      // sqlite: {
+      //   client: "sqlite3",
+      //   connection: {
+      //       filename: "../db",
+      //   },
+      //   useNullAsDefault: true
+      // },
+    }
   };
   
   export { config };

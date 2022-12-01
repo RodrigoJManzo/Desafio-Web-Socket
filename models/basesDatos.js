@@ -3,14 +3,20 @@ import {ContainerMySQL} from "./containerMySQL.js";
 import { KnexService } from "../config/dbService.js";
 
 
-const ALL_DATABASES = {
-sql: () => {
-    KnexService.init();
-    return {
-      ProductosSQL: new ContainerMySQL(KnexService.KnexMySQL, "products"),
-      MensajesSQL: new ContainerMySQL(KnexService. KnexMySQL, "messages"),
-    };
-  },
-};
+// const ALL_DATABASES = {
+// sql: () => {
+//     KnexService.init();
+//     return {
+//       ProductosSQL: new ContainerMySQL(KnexService.KnexMySQL, "products"),
+//       MensajesSQL: new ContainerMySQL(KnexService. KnexMySQL, "messages"),
+//     };
+//   },
+// };
 
-export const { ProductosSQL, MensajesSQL } = ALL_DATABASES[config.SELECTED_DATABASE.name]();
+const ProductosSQL = new ContainerMySQL(KnexService.KnexMySQL, "products")
+const MensajesSQL = new ContainerMySQL(KnexService.KnexMySQL, "messages")
+
+
+//export const { ProductosSQL, MensajesSQL } = ALL_DATABASES[config.SELECTED_DATABASE.name]();
+
+export {ProductosSQL, MensajesSQL}
