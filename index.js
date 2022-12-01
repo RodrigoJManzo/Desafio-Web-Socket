@@ -2,6 +2,8 @@ import express from "express"
 import {Server as HttpServer} from "http"
 import {Server as SocketIOServer} from "socket.io"
 import {MensajesSQL,ProductosSQL} from "./models/basesDatos.js"
+import { engine } from 'express-handlebars'
+
 
 // importo dayjs y agrego pluging CustomParseFormat
 import dayjs from "dayjs"
@@ -10,13 +12,18 @@ dayjs.extend(customParseFormat)
 
 import Products from "./models/producto/modelProducto.js"
 import Messages from "./models/Mensaje/modelMensaje.js"
+import { testRouter } from "./routes/testRoute.js"
 
 const app = express ()
+app.engine('handlebars', engine());
+app.set('view engine', 'handlebars');
+app.set('views', './public/assets/templates/');
 const httpServer = new HttpServer(app)
 const io = new SocketIOServer(httpServer)
 
 const PORT = 8080
 app.use(express.static(`./public`))
+app.use("/api", testRouter)
 
 httpServer.listen(PORT, ()=> console.log(`server corriendo en ${PORT}`))
 
