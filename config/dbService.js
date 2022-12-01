@@ -35,8 +35,9 @@ const createMessagesTable = async (selectedKnex) => {
 
     await selectedKnex.schema.createTable("messages", (table) => {
       table.increments("id");
-      table.string("mensaje");
-      table.string("date");
+      table.string("email");
+      table.string("text");
+      table.string("timestamp");
     });
 
     await addDatasets(selectedKnex, DATASETS.messages, "messages");
@@ -48,7 +49,7 @@ const createMessagesTable = async (selectedKnex) => {
 const init = async () => {
   
   await createProductTable(KnexMySQL);
-  await createMessagesTable(KnexSqlite);
+  await createMessagesTable(KnexMySQL);
 };
 
 const KnexService = {

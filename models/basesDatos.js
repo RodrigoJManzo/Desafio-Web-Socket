@@ -8,7 +8,7 @@ sql: () => {
     KnexService.init();
     return {
       ProductosSQL: new ContainerMySQL(KnexService.KnexMySQL, "products"),
-      MensajesSQL: new ContainerMySQL(KnexService. KnexSqlite, "messages"),
+      MensajesSQL: new ContainerMySQL(KnexService. KnexMySQL, "messages"),
     };
   },
 };
