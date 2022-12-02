@@ -3,8 +3,8 @@
 {{#if messages.length}}
     {{#each messages}}
     <div class="chat-message">
-        <p class="chat-message-text">{{this.mensaje}}</p>
-        <p class="chat-message-date">{{this.date}}</p>
+        <p class="chat-message-text">{{this.text}}</p>
+        <p class="chat-message-date">{{this.author.id}}</p>
     </div>
     {{/each}}
 {{/if}}

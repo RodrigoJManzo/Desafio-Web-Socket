@@ -1,5 +1,5 @@
-import Container from "../container.js"
+import {ContainerMySQL} from "../containerMySQL.js"
 
-const Messages = new Container('Messages')
+const Messages = new ContainerMySQL('Messages')
 
 export default Messages

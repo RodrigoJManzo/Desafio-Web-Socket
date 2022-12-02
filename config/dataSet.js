@@ -20,24 +20,41 @@ const products = [
   ];
   
   const messages = [
-    {
-      
-      email: "11",
-      text: "22 ",
-      
+    { 
+      author: {
+          id: 'mail del usuario1', 
+          nombre: 'nombre del usuario1', 
+          apellido: 'apellido del usuario1', 
+          edad: 'edad del usuario1', 
+          alias: 'alias del usuario1',
+          avatar: 'url avatar (foto, logo) del usuario1'
+      },
+      text: 'mensaje 1'
+  },
+  { 
+    author: {
+        id: 'mail del usuario2', 
+        nombre: 'nombre del usuario2', 
+        apellido: 'apellido del usuario2', 
+        edad: 'edad del usuario2', 
+        alias: 'alias del usuario2',
+        avatar: 'url avatar (foto, logo) del usuario2'
     },
-    {
-      
-      email: "33",
-      text: "¿44",
-      
-    },
-    {
-      
-      email: "55",
-      text: "66",
-      
-    },
+    text: 'mensaje 2'
+},
+{ 
+  author: {
+      id: 'mail del usuario3', 
+      nombre: 'nombre del usuario3', 
+      apellido: 'apellido del usuario3', 
+      edad: 'edad del usuario3', 
+      alias: 'alias del usuario3',
+      avatar: 'url avatar (foto, logo) del usuario3'
+  },
+  text: 'mensaje 3'
+}
+  
+    
   ];
   
   export const DATASETS = { products, messages };

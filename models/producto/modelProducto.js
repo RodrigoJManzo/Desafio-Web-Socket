@@ -1,5 +1,5 @@
-import Container from "../container.js"
+import {ContainerMySQL} from "../containerMySQL.js"
 
-const Products = new Container('Products')
+const Products = new ContainerMySQL('Products')
 
 export default Products
