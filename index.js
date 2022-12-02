@@ -3,6 +3,7 @@ import {Server as HttpServer} from "http"
 import {Server as SocketIOServer} from "socket.io"
 import {MensajesSQL,ProductosSQL} from "./models/basesDatos.js"
 import { engine } from 'express-handlebars'
+import { fakeProducts } from "./data/faker.js"
 
 
 // importo dayjs y agrego pluging CustomParseFormat
@@ -10,9 +11,13 @@ import dayjs from "dayjs"
 import customParseFormat from "dayjs/plugin/customParseFormat.js"
 dayjs.extend(customParseFormat)
 
+let pathToFile = './data/Tests.json'
+fakeProducts(pathToFile)
+
 import Products from "./models/producto/modelProducto.js"
 import Messages from "./models/Mensaje/modelMensaje.js"
 import { testRouter } from "./routes/testRoute.js"
+
 
 const app = express ()
 app.engine('handlebars', engine());

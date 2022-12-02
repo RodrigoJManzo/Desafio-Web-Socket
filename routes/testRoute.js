@@ -6,7 +6,7 @@ const router = Router()
 router.get('/productos-test', async (req, res)=>{
     
     try {
-        const data = await Test.getAll()
+        const data = await Test.getData()
         res.render("productsTemplate.handlebars", {data})
         
     } catch (error) {
