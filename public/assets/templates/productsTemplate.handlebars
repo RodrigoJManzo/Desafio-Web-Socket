@@ -1,14 +1,21 @@
 <h2 id="tituloProducto">Productos</h2>
 <div id="vistaProducto">
-{{#if products.length}}
+<div>
+    {{#if products.length}}
     {{#each products}}
-    <div class="product">
-        <img src='{{  this.imagen }}' alt='{{ this.titulo }}' class="product__img">
-        <div class="product__info">
-            <h4 class='product__title'> {{ this.titulo }} </h4>
-            <h4 class='product__price'> $ {{ this.precio }} </h4>
-        </div>
-    </div>
+            <table>
+        <tr>
+            <th>TITULO</th>
+            <th>PRECIO</th>
+            <th>IMAGEN</th>
+        </tr>
+        <tr>
+            <td>{{ this.titulo }}</td>
+            <td>{{ this.precio }}</td>
+            <td><img src='{{  this.imagen }}' alt='{{ this.titulo }}' class="product__img"></td>
+        </tr>
+       
+        </table>
     {{/each}}
   {{else}}
   <p id="products_empty">No posee productos ingresados</p>
