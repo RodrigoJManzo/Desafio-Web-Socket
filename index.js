@@ -4,25 +4,50 @@ import {Server as SocketIOServer} from "socket.io"
 import {MensajesSQL,ProductosSQL} from "./models/basesDatos.js"
 import { engine } from 'express-handlebars'
 import { fakeProducts } from "./data/faker.js"
-
+import { testRouter } from "./routes/testRoute.js"
+import cookieParser from "cookie-parser"
 
 // importo dayjs y agrego pluging CustomParseFormat
 import dayjs from "dayjs"
 import customParseFormat from "dayjs/plugin/customParseFormat.js"
+import session from "express-session"
+import MongoStore from "connect-mongo"
 dayjs.extend(customParseFormat)
 
 let pathToFile = './data/Tests.json'
 fakeProducts(pathToFile)
 
-import Products from "./models/producto/modelProducto.js"
-import Messages from "./models/Mensaje/modelMensaje.js"
-import { testRouter } from "./routes/testRoute.js"
+// import Products from "./models/producto/modelProducto.js"
+// import Messages from "./models/Mensaje/modelMensaje.js"
+
+
 
 
 const app = express ()
 app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
 app.set('views', './public/assets/templates/');
+
+const settingsMongo = {useNewsUrlParser:true, useUnifiedTopology:true}
+const mongoURL = process.env.MONGO_URL || "mongodb+srv://user:<password>@rmanzo.rgeyn6w.mongodb.net/?retryWrites=true&w=majority";
+app.use(cookieParser())
+app.use(session({
+    store: MongoStore.create({
+        mongoUrl:`${mongoURL}?dbName=sesiones`,
+        mongoOptions: settingsMongo,
+        ttl:60,
+        collectionName:'sessions'
+    }),
+    secret:'asd123',
+    resave: false,
+    saveUninitialized: false,
+    cookie:{
+        maxAge: 3600
+    }
+}))
+
+
+
 const httpServer = new HttpServer(app)
 const io = new SocketIOServer(httpServer)
 
