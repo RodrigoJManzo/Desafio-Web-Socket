@@ -1,12 +1,24 @@
-const root = (req, res) =>{
-    if (req.session.contador) {
-        req.session.contador++;
-        res.status(200).send(`${req.session.nombre} hay ${req.session.contador} visitas tuyas`)
-    } else {
-        const nombre = req.query.nombre || 'b';
-        req.session.contador= 1;
-        req.session.nombre = nombre
-        res.status(200).send(`${nombre} bienvenid@ `)
+
+
+
+
+const root = (req, res, next) =>{
+    try {
+        res.render('../public/assets/templates/formularioLogIn.handlebars')
+        const formLogIn = document.getElementById(`formLogIn`)
+        formLogIn.addEventListener('submit', (e) =>{
+            e.preventDefault()
+            const data = new FormData(formLogIn)
+            const values = Object.fromEntries(data)
+            formLogIn.reset()
+            const nombre = values.username
+            req.session.nombre = nombre
+            //res.status(200).send(`${nombre}, Bienvenido!`)
+            console.log(`Usuario Ingresado`, values)
+            next()
+        } )
+    } catch (error) {
+        console.log.apply(error)   
     }
 }
 const forget = (req, rs) =>{
@@ -17,3 +29,5 @@ const forget = (req, rs) =>{
         res.send(500,'', error )
     }
 }
+
+export {root, forget}

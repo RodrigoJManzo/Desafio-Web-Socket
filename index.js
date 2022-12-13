@@ -6,6 +6,7 @@ import { engine } from 'express-handlebars'
 import { fakeProducts } from "./data/faker.js"
 import { testRouter } from "./routes/testRoute.js"
 import cookieParser from "cookie-parser"
+import { routerSession } from "./routes/validateRoute.js"
 
 // importo dayjs y agrego pluging CustomParseFormat
 import dayjs from "dayjs"
@@ -28,13 +29,12 @@ app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
 app.set('views', './public/assets/templates/');
 
-const settingsMongo = {useNewsUrlParser:true, useUnifiedTopology:true}
-const mongoURL = process.env.MONGO_URL || "mongodb+srv://user:<password>@rmanzo.rgeyn6w.mongodb.net/?retryWrites=true&w=majority";
+
+const mongoURL = process.env.MONGO_URL || "mongodb+srv://user:asd123@rmanzo.rgeyn6w.mongodb.net/";
 app.use(cookieParser())
 app.use(session({
     store: MongoStore.create({
         mongoUrl:`${mongoURL}?dbName=sesiones`,
-        mongoOptions: settingsMongo,
         ttl:60,
         collectionName:'sessions'
     }),
@@ -52,8 +52,10 @@ const httpServer = new HttpServer(app)
 const io = new SocketIOServer(httpServer)
 
 const PORT = 8080
+app.use("/", routerSession )
+app.use("/root/api", testRouter)
 app.use(express.static(`./public`))
-app.use("/api", testRouter)
+
 
 httpServer.listen(PORT, ()=> console.log(`server corriendo en ${PORT}`))
 

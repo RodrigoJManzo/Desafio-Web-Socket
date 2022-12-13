@@ -1,11 +1,33 @@
-import { express } from "express";
 import { Router } from "express";
 
 const router = Router()
 
-import {root , forget} from '../controllers/sessionOps' 
+router.get('/root', async (rec, res, next)=>{
+    try {
+        res.render('formularioLogIn.handlebars')
+        const formLogIn = document.getElementById(`formLogIn`)
+        formLogIn.addEventListener('submit', (e) =>{
+            e.preventDefault()
+            const data = new FormData(formLogIn)
+            const values = Object.fromEntries(data)
+            formLogIn.reset()
+            const nombre = values.username
+            req.session.nombre = nombre
+            res.status(200).send(`${nombre}, Bienvenido!`)
+            console.log(`Usuario Ingresado`, values)
+            next()
+        } )
+    } catch (error) {
+        console.log.apply(error)   
+    }
+    } );
+router.get('/forget', async (req,res)=>{
+    try {
+        req.session.destroy();
+        res.status(200). send ('Nos vemo luego')
+    } catch (error) {
+        res.send(500,'', error )
+    }
+})
 
-router.get('/root', root);
-router.get('/forget', forget)
-
-export {router as RouterSession}
+export {router as routerSession}
