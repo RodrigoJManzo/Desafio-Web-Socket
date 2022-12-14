@@ -1,63 +1,108 @@
+// express
 import express from "express"
+import { engine } from 'express-handlebars'
+import session from "express-session"
+import handlebars from "express-handlebars"
+import router from "./routes/router.js"
+
+// Mongo
+import MongoStore from "connect-mongo"
+import mongoose from "mongoose"
+
+//socket io
 import {Server as HttpServer} from "http"
 import {Server as SocketIOServer} from "socket.io"
-import {MensajesSQL,ProductosSQL} from "./models/basesDatos.js"
-import { engine } from 'express-handlebars'
-import { fakeProducts } from "./data/faker.js"
-import { testRouter } from "./routes/testRoute.js"
+
+// Cookies & Session
 import cookieParser from "cookie-parser"
 import { routerSession } from "./routes/validateRoute.js"
 
 // importo dayjs y agrego pluging CustomParseFormat
 import dayjs from "dayjs"
 import customParseFormat from "dayjs/plugin/customParseFormat.js"
-import session from "express-session"
-import MongoStore from "connect-mongo"
+
+// Passport
+import passport from "passport"
+import { Strategy as LocalStrategy } from "passport-local"
+import {User} from './models/user.js'
+import * as strategy from './passport/strategy.js'
+
+
+//varios
+import {MensajesSQL,ProductosSQL} from "./models/basesDatos.js"
+import { fakeProducts } from "./data/faker.js"
+import { testRouter } from "./routes/testRoute.js"
+
+
 dayjs.extend(customParseFormat)
 
+//ruta de archivo para Testeo de Mocking
 let pathToFile = './data/Tests.json'
 fakeProducts(pathToFile)
 
-// import Products from "./models/producto/modelProducto.js"
-// import Messages from "./models/Mensaje/modelMensaje.js"
-
-
-
-
-const app = express ()
-app.engine('handlebars', engine());
-app.set('view engine', 'handlebars');
-app.set('views', './public/assets/templates/');
-
-
-const mongoURL = process.env.MONGO_URL || "mongodb+srv://user:asd123@rmanzo.rgeyn6w.mongodb.net/";
-app.use(cookieParser())
-app.use(session({
-    store: MongoStore.create({
-        mongoUrl:`${mongoURL}?dbName=sesiones`,
-        ttl:60,
-        collectionName:'sessions'
-    }),
-    secret:'asd123',
-    resave: false,
-    saveUninitialized: false,
-    cookie:{
-        maxAge: 3600
-    }
-}))
-
-
-
+// App settings
 const httpServer = new HttpServer(app)
 const io = new SocketIOServer(httpServer)
 
-const PORT = 8080
-app.use("/", routerSession )
+const mongoURL = process.env.MONGO_URL || "mongodb+srv://user:asd123@rmanzo.rgeyn6w.mongodb.net/";
+
+const app = express ()
+app.use(cookieParser())
+app.use(session({
+    store: MongoStore.create({
+        mongoUrl:mongoURL,
+        ttl:600,
+        collectionName:'sessions'
+    }),
+    secret:'secret',
+    resave: false,
+    saveUninitialized: false,
+    rolling:false,
+    cookie:{maxAge: 60000}
+}))
+
+app.engine('handlebars', engine());
+app.set('view engine', 'handlebars');
+app.set('views', './public/assets/views/');
+app.use(express.urlencoded({extended:true}))
+app.use(passport.initialize())
+app.use(passport.session())
+app.use("/", router)
 app.use("/root/api", testRouter)
 app.use(express.static(`./public`))
 
+passport.use(
+    "logIn", new LocalStrategy ({ passReqToCallback: true }, strategy.logIn)
+)
 
-httpServer.listen(PORT, ()=> console.log(`server corriendo en ${PORT}`))
+passport.use(
+    "register", new LocalStrategy ({passReqToCallback: true}, strategy.register)
+)
+
+passport.serializeUser((user, done)=>{
+    done (null, user._id)
+})
+
+passport.deserializeUser((id, done)=>{
+    User.findById(id, function (error, user){
+        done(error, user)
+    })
+})
+
+const PORT = process.env.PORT || 8080
+const ServerConnect = app.listen(PORT, async ()=>{
+    console.log(`Server Running on ${srv.address().port}`)
+    try {
+        await mongoose.connect(mongoURL, {
+            useNewUrlParcer: true,
+            useUnifiedTopology: true
+        })
+        console.log("DB Connection OnLine")
+    } catch (error) {
+        console.log(`DB Connection went Wrong because : ${error}`)
+    }
+})
+ServerConnect.on("error", (error)=> console.log(`Server Error ${error}`))
 
 
 

@@ -3,8 +3,8 @@ import { Router } from "express";
 const router = Router()
 
 router.get('/root', async (rec, res, next)=>{
+    res.render('formularioLogIn.handlebars')
     try {
-        res.render('formularioLogIn.handlebars')
         const formLogIn = document.getElementById(`formLogIn`)
         formLogIn.addEventListener('submit', (e) =>{
             e.preventDefault()

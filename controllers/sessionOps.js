@@ -1,10 +1,11 @@
 
-
+logIn = (req, res)=>{
+    if (req.session.username) req.redirect('')
+}
 
 
 const root = (req, res, next) =>{
     try {
-        res.render('../public/assets/templates/formularioLogIn.handlebars')
         const formLogIn = document.getElementById(`formLogIn`)
         formLogIn.addEventListener('submit', (e) =>{
             e.preventDefault()
@@ -13,7 +14,7 @@ const root = (req, res, next) =>{
             formLogIn.reset()
             const nombre = values.username
             req.session.nombre = nombre
-            //res.status(200).send(`${nombre}, Bienvenido!`)
+            res.status(200).send(`${nombre}, Bienvenido!`)
             console.log(`Usuario Ingresado`, values)
             next()
         } )
