@@ -41,8 +41,7 @@ let pathToFile = './data/Tests.json'
 fakeProducts(pathToFile)
 
 // App settings
-const httpServer = new HttpServer(app)
-const io = new SocketIOServer(httpServer)
+
 
 const mongoURL = process.env.MONGO_URL || "mongodb+srv://user:asd123@rmanzo.rgeyn6w.mongodb.net/";
 
@@ -91,19 +90,17 @@ passport.deserializeUser((id, done)=>{
 
 const PORT = process.env.PORT || 8080
 const ServerConnect = app.listen(PORT, async ()=>{
-    console.log(`Server Running on ${srv.address().port}`)
+    console.log(`Server Running on ${ServerConnect.address().port}`)
     try {
-        await mongoose.connect(mongoURL, {
-            useNewUrlParcer: true,
-            useUnifiedTopology: true
-        })
+        await mongoose.connect(mongoURL, {})
         console.log("DB Connection OnLine")
     } catch (error) {
         console.log(`DB Connection went Wrong because : ${error}`)
     }
 })
 ServerConnect.on("error", (error)=> console.log(`Server Error ${error}`))
-
+const httpServer = new HttpServer(app)
+const io = new SocketIOServer(httpServer)
 
 
 //AUTOMATICAMENTE AL INICIAR CONEXION ENVIO MESAJES Y PRODUCTOS EN LA MEMORIA
