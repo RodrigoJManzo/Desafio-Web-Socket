@@ -78,6 +78,10 @@ passport.use(
     "register", new LocalStrategy ({passReqToCallback: true}, strategy.register)
 )
 
+passport.use(
+    "logout", new LocalStrategy ({passReqToCallback: true}, strategy.logout)
+)
+
 passport.serializeUser((user, done)=>{
     done (null, user._id)
 })

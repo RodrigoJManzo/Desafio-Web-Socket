@@ -30,7 +30,7 @@ router.get("/register", (req,res)=>{
 
 router.get("/logOut", (req,res)=>{
     const {username} = req.user
-    req.logOut();
+    req.logout();
     res.render("logOut", {username})
 })
 
@@ -44,7 +44,7 @@ router.get("/logIn", (req,res)=>{
 
 router.get("/", (req,res)=>{
     if(req.isAuthenticated()){
-        res.render("home", {usermame:req/user.username})
+        res.render("home", {usermame: req.user.username})
     }else{
         res.redirect("logIn")
     }

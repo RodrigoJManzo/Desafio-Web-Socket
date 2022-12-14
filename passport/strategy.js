@@ -25,7 +25,6 @@ const logIn = (req, username, password, done)=>{
 }
 
 const register = (req, username, password, done) =>{
-    const findOrCreate = () =>{
         User.findOne({username:username}, (error, user)=>{
             if(error){
                 console.log("Sign Up Error"+ error)
@@ -38,11 +37,20 @@ const register = (req, username, password, done) =>{
                 const newUser = new User()
                 newUser.username = username
                 newUser.password = createHash(password)
-                newUser.save().then(datos => done(null, datos)).catch(null,flase) 
+                newUser.save().then(datos => done(null, datos)).catch(null,false) 
             }
         })
     }
-//process.nextTick(findOrCreate)    
+
+const logout = (username, done)=>{
+    if(error){
+        console.log(error)
+        return done(error)
+    }else{
+        username = User.username
+        console.log(`YOU ARE LOGGED OUT ${username}`)
+    }
 }
 
-export {logIn, register}
+
+export {logIn, register, logout}
